@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="speedo.css">
+    <title>NFS Speedo</title>
+</head>
+<body>
+    <section class="dial">
+        <svg viewBox="0 0 200 200" class="arc-speedo">
+            <path id="speedoArcBg" class="arc-bg"/>
+            <path id="insideArcBg" class="inside-arc-bg"/>
+            <path id="inside2ArcBg" class="inside2-arc-bg"/>
+            <path id="rpmRedline" d="" stroke="red" stroke-opacity="0.35" stroke-width="12" fill="none" stroke-linecap="butt"/>
+        </svg>
+        <div class="inside-circle"></div>
+        <div class="circle-point"></div>
+        <div id="speedPointer" class="speed-pointer"></div>
+        <div class="circular-number"></div>
+        <div class="ticks"></div>
+    </section>
+    <section class="speedo-container">
+        <div id="gearValue" class="gear"></div>
+        <div id="speedValue" class="speed"></div>
+        <div class="speed-display">MPH</div>
+    </section>
+    <script src="speedo.js"></script>
+</body>
+</html>

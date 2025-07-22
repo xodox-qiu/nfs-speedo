@@ -1,0 +1,140 @@
+body {
+  /* background: transparent !important; */
+  background: rgb(48, 48, 48);
+  margin: 0;
+  padding: 0;
+}
+
+.dial {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  border-radius: 50%;
+  bottom: 20px;
+  right: 20px;
+  user-select: none;
+  background-color: rgba(2, 2, 2, 0.349);
+}
+
+.circle-point {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background-color: #dbdbdb;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+}
+
+.inside-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 5px solid #dbdbdb;
+  transform: translate(-50%, -50%);
+}
+
+.arc-bg {
+  stroke: #64646479;
+  stroke-width: 15;
+  fill: none;
+}
+
+.inside-arc-bg {
+    stroke: #64646479;
+    stroke-width: 4;
+    fill: none;
+}
+
+.inside2-arc-bg {
+    stroke: #4747476c;
+    stroke-width: 18;
+    fill: none;
+}
+
+.ticks {
+    position: absolute;
+    top: 48px;
+    left: 43px;
+    width: 200px;
+    height: 200px;
+    transform: rotate(-65deg);
+    pointer-events: none;
+}
+
+.tick {
+    position: absolute;
+    top: 49%;
+    left: 49.3%;
+    width: 5px;
+    height: 20px;
+    background: rgb(211, 211, 211);
+    transform-origin: center center;
+    border-radius: 15%;
+}
+
+.speed-pointer {
+  position: absolute;
+  left: 47.9387%;
+  bottom: 10px;
+  width: 0.5px;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 140px solid rgb(216, 216, 216); /* triangle pointing up */
+  z-index: 11;
+  transform-origin: 50% 0;
+  transition: transform 0.3s ease-out;
+}
+
+.circular-number .number {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 22px;
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: bold;
+  color: white;
+}
+
+.speedo-container {
+  position: absolute;
+  transform-origin: center bottom;
+  bottom: 100px;
+  right: 100px;
+  z-index: 7;
+}
+
+.speed {
+  position: absolute;
+  font-size: 36px;
+  right: -35px;
+  bottom: 13px;
+  font-family: "Bebas Neue", sans-serif;
+  color: white;
+}
+
+.speed-display {
+  position: absolute;
+  font-size: 21px;
+  right: -20px;
+  bottom: -22px;
+  font-family: "Bebas Neue", sans-serif;
+  color: white;
+}
+
+.gear {
+  position: absolute;
+  font-size: 36px;
+  right: -35px;
+  bottom: 60px;
+  font-family: "Bebas Neue", sans-serif;
+  color: white;
+}
+
+
+
