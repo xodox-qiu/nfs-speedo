@@ -121,8 +121,13 @@ function createCircularNumbers() {
 createCircularNumbers();
 
 function setSpeed(speedValue) {
-    elements.speedValue.innerText = `${Math.round(speedValue * 2.236936)}`;
+    const clampedSpeed = Math.max(0, Math.min(100, speedValue)); // assuming speed in 0–100 range
+
+    elements.speedValue.innerText = `${Math.round(clampedSpeed * 2.236936)}`; // display MPH
+    const percent = clampedSpeed / 100; // normalize to 0–1
+    setTriangleBySpeed(percent);        // update pointer based on same speed percent
 }
+
 
 function setGear(gearValue) {
     elements.gearValue.innerText = String(gearValue);
