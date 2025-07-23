@@ -89,7 +89,7 @@ body {
   border-top: 140px solid rgb(216, 216, 216); /* triangle pointing up */
   z-index: 11;
   transform-origin: 50% 0;
-  transition: transform 0.3s ease-out;
+  transition: transform 0.085s ease-out;
 }
 
 .circular-number .number {

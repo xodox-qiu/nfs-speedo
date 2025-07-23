@@ -121,10 +121,10 @@ function createCircularNumbers() {
 createCircularNumbers();
 
 function setSpeed(speedValue) {
-    const clampedSpeed = Math.max(0, Math.min(224, speedValue)); // assuming speed in 0–100 range
+    const clampedSpeed = Math.max(0, Math.min(70, speedValue)); // assuming speed in 0–100 range
 
     elements.speedValue.innerText = `${Math.round(clampedSpeed * 2.236936)}`; // display MPH
-    const percent = clampedSpeed / 224; // normalize to 0–1
+    const percent = clampedSpeed / 70; // normalize to 0–1
     setTriangleBySpeed(percent);        // update pointer based on same speed percent
 }
 
@@ -161,4 +161,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // setSpeed();  // Set speed to 50 mph
     // setGear(randomg);    // Set gear to 3
     // }, 1000); // Update speed and gear every second
+
+//     let currentSpeed = 0;
+//     let goingUp = true;
+
+//     setInterval(() => {
+//         if (goingUp) {
+//             currentSpeed += 1;
+//             if (currentSpeed >= 140) goingUp = false;
+//         } else {
+//             currentSpeed -= 1;
+//             if (currentSpeed <= 0) goingUp = true;
+//         }
+
+//         setSpeed(currentSpeed);
+// }, 100);
+
 });
