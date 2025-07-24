@@ -150,12 +150,41 @@ function createCircularNumbers() {
 }
 createCircularNumbers();
 
-function setSpeed(speedValue) {
-    const clampedSpeed = Math.max(0, Math.min(70, speedValue)); // assuming speed in 0–100 range
+let currentSpeed = 0; // store ongoing value
+let speedAnimationFrame = null;
 
-    elements.speedValue.innerText = `${Math.round(clampedSpeed * 2.236936)}`; // display MPH
-    const percent = clampedSpeed / 70; // normalize to 0–1
-    setTriangleBySpeed(percent);        // update pointer based on same speed percent
+function setSpeed(targetSpeed) {
+    // Cancel any ongoing animation
+    cancelAnimationFrame(speedAnimationFrame);
+
+    const animationSpeed = 0.2; // How fast it animates (0.1 – 0.3 is smooth)
+
+    function animate() {
+        const diff = targetSpeed - currentSpeed;
+
+        if (Math.abs(diff) < 0.05) {
+            currentSpeed = targetSpeed;
+        } else {
+            currentSpeed += diff * animationSpeed;
+        }
+
+        // Clamp to 0–100 range
+        const clampedSpeed = Math.max(0, Math.min(100, currentSpeed));
+
+        // Update the number (MPH)
+        elements.speedValue.innerText = `${Math.round(clampedSpeed * 2.236936)}`;
+
+        // Update the pointer
+        const percent = clampedSpeed / 100;
+        setTriangleBySpeed(percent);
+
+        // Keep animating if still not reached target
+        if (Math.abs(diff) >= 0.05) {
+            speedAnimationFrame = requestAnimationFrame(animate);
+        }
+    }
+
+    animate();
 }
 
 function setGear(gearValue) {
