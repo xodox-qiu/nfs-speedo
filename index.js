@@ -196,18 +196,17 @@ function setRedline() {
 setRedline();
 
 function setSmallFuelPointer(fuel) {
-    const arcStart = 5;
-    const arcSweep = 205;
-    const angle = arcStart + arcSweep * fuel;
+    const arcStart = 5;        // starting angle of the arc
+    const arcSweep = 205;      // how much the arc covers in degrees
+    const angle = arcStart + arcSweep * fuel; // final angle
 
-    const pointer = document.getElementById("fuelValue");
+    const pointer = document.getElementById("fuelPointer"); // not "fuelValue"
     pointer.style.transform = `rotate(${angle}deg)`;
 }
 
 function setFuel(fuel) {
-    elements.fuelHealth.innerText = `${(fuel * 100).toFixed(1)}%`;
-    setfuelHealth(fuel); // arc fill
-    setSmallFuelPointer(fuel); // <-- pointer rotation
+    elements.fuelHealth.innerText = `${(fuel * 100).toFixed(1)}%`; // keep this for the game
+    setSmallFuelPointer(fuel); // rotate the pointer visually
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -216,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
         gearValue: document.getElementById("gearValue"),
         pointer: document.getElementById("speedPointer"),
         rpmRedline: document.getElementById('rpmRedline'),
-        fuelHealth: document.getElementById("fuelValue"),
+        fuelHealth: document.getElementById("fuelValue") // ✅ Add this line
     }
 
     // setInterval(() => {
@@ -227,7 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // setTriangleBySpeed(0); // Set initial speed to 50 mph
     // setSpeed(randoms);  // Set speed to 50 mph
     // setGear(randomg);    // Set gear to 3
-    // setSmallFuelPointer(random); // Set fuel to a random value between 0 and 1
+    // setFuel(random);     // Set fuel to a random value between 0 and 1
     // }, 1000); // Update speed and gear every second
 
 //     let currentSpeed = 0;
