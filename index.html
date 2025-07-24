@@ -14,11 +14,29 @@
             <path id="inside2ArcBg" class="inside2-arc-bg"/>
             <path id="rpmRedline" d="" stroke="red" stroke-opacity="0.35" stroke-width="12" fill="none" stroke-linecap="butt"/>
         </svg>
+        <svg viewBox="0 0 200 200" class="small-speedo">
+            <path id="smallArcBg" class="small-arc-bg"/>
+            <path id="smallRpmRedline" class="small-rpm-redline"/> <!-- ADD THIS -->
+        </svg>
+        <svg viewBox="0 0 100 100" width="150" height="150" class="bited-speedo">
+        <defs>
+            <mask id="biteMask">
+            <rect width="100" height="100" fill="white"/>
+            <circle cx="155" cy="-14" r="90" fill="black" />
+            </mask>
+        </defs>
+        <circle cx="50" cy="50" r="45" fill="#0202029c" mask="url(#biteMask)" stroke="#999" stroke-width="0"/>
+        </svg>
+        <div class="smallticks"></div>
         <div class="inside-circle"></div>
+        <div class="inside-smallcircle"></div>
         <div class="circle-point"></div>
+        <div class="smallcircle-point"></div>
         <div id="speedPointer" class="speed-pointer"></div>
         <div class="circular-number"></div>
+        <div class="empty">E</div>
         <div class="ticks"></div>
+        <div id="fuelValue" class="small-fuel-pointer"></div>
     </section>
     <section class="speedo-container">
         <div id="gearValue" class="gear"></div>

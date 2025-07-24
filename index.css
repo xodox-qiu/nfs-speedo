@@ -1,3 +1,7 @@
+html, body {
+  overflow: hidden;
+}
+
 body {
   background: transparent !important;
   /* background: rgb(48, 48, 48); */
@@ -14,7 +18,7 @@ body {
   bottom: 20px;
   right: 20px;
   user-select: none;
-  background-color: rgba(2, 2, 2, 0.61);
+  background-color: #0202029c;
 }
 
 .circle-point {
@@ -23,6 +27,18 @@ body {
   left: 50%;
   width: 13px;
   height: 13px;
+  border-radius: 50%;
+  background-color: #dbdbdb;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+}
+
+.smallcircle-point {
+  position: absolute;
+  bottom: 21.3%;
+  left: -14%;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background-color: #dbdbdb;
   transform: translate(-50%, -50%);
@@ -40,6 +56,17 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.inside-smallcircle {
+  position: absolute;
+  bottom: 17.7%;
+  left: -14%;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 4px solid #dbdbdb;
+  transform: translate(-50%, -50%);
+}
+
 .arc-bg {
   stroke: #64646479;
   stroke-width: 15;
@@ -52,10 +79,43 @@ body {
     fill: none;
 }
 
+.small-speedo {
+  position: absolute;
+  left: -140px;
+  bottom: -25px;  
+  width: 200px;
+  height: 200px;
+  z-index: -2;
+  rotate: 20deg;
+}
+
+.small-arc-bg {
+    stroke: #64646479;
+    stroke-width: 10;
+    fill: none;
+}
+
 .inside2-arc-bg {
     stroke: #4747476c;
     stroke-width: 18;
     fill: none;
+}
+
+.smallticks {
+    position: absolute;
+    bottom: 77px;
+    left: -50px;
+    transform: rotate(-72.5deg);
+    pointer-events: none;
+}
+
+.smalltick {
+    position: absolute;
+    width: 3px;
+    height: 10px;
+    background: rgb(211, 211, 211);
+    transform-origin: bottom center;
+    border-radius: 15%;
 }
 
 .ticks {
@@ -137,5 +197,49 @@ body {
   color: white;
 }
 
+.bited-speedo {
+  position: absolute;
+  top: 150px;
+  left: -115px;
+  width: 150px;
+  height: 150px;
+  rotate: 9.5deg;
+  z-index: -3;
+}
 
+.small-rpm-redline {
+    stroke: red;
+    stroke-opacity: 0.35;
+    stroke-width: 8;
+    fill: none;
+    stroke-linecap: butt;
+}
+
+.small-fuel-pointer {
+    position: absolute;
+    bottom: 15px;
+    left: -44.5px;
+    width: 0;
+    height: 0;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top: 60px solid rgb(216, 216, 216); /* triangle pointing up */
+    transform-origin: 50% 0;
+    transition: transform 0.2s ease-out;
+    z-index: 10;
+}
+
+.empty {
+  position: absolute;
+  bottom: 27px;
+  color: red;
+  font-style: "Bebas Neue", sans-serif;
+  left: -50px;
+  width: 20px;
+  height: 20px;
+}
+
+.color {
+  color: #0202029c;
+}
 
