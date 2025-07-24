@@ -15,8 +15,8 @@ body {
   height: 300px;
   position: absolute;
   border-radius: 50%;
-  bottom: 30px;
-  right: 20px;
+  bottom: 35px;
+  right: 10px;
   user-select: none;
   background-color: #0202029c;
 }
