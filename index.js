@@ -1,7 +1,5 @@
 let elements = {};
 let speed = 0;
-let engineHealth = 0;
-let currentEngineHealth = 0; // full health at start
 
 function polarToCartesian(cx, cy, r, angleDeg) {
     const angleRad = (angleDeg - 90) * Math.PI / 180.0;
@@ -168,7 +166,7 @@ function createCircularNumbers() {
 }
 createCircularNumbers();
 
-let currentSpeed = 0; // store ongoing value
+let currentSpeed = 0;
 let speedAnimationFrame = null;
 
 function setSpeed(targetSpeed) {
@@ -289,12 +287,12 @@ function setEngineBgArc(percent) {
 setEngineBgArc(0.5); // Set initial engine arc to 50%
 
 function setEngineHealth(percent) {
-
   const centerX = 170;
   const centerY = 170;
-  const radius = 145;          // should match your SVG radius
-  const arcStart = -92;        // tweak so arc aligns nicely
-  const arcSweep = 139;        // total degrees the arc covers
+  const radius = 145;
+  
+  const arcStart = -92;
+  const arcSweep = 139;
 
   const arcEnd = arcStart + (arcSweep * percent);
 
@@ -314,8 +312,8 @@ document.addEventListener("DOMContentLoaded", () => {
         pointer: document.getElementById("speedPointer"),
         rpmRedline: document.getElementById('rpmRedline'),
         fuelHealth: document.getElementById("fuelValue"),
-        engineHealth: document.getElementById("engine")
-        }
+        engineHealth: document.getElementById('engine')
+        };
 
     // setInterval(() => {
     // const random = Math.random();
@@ -326,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // setSpeed(100);  // Set speed to 50 mph
     // setGear(randomg);    // Set gear to 3
     // setFuel(random);     // Set fuel to a random value between 0 and 1
-    // setEngineHealth(1); // Set engine health to a random value between 0.6 and 1.0
+    // setEngineHealth(0.8); // Set engine health to a random value between 0.6 and 1.0
     // }, 1000); // Update speed and gear every second
 
 //     let currentSpeed = 0;
