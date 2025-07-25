@@ -296,8 +296,8 @@ function setEngineHealth(percent) {
 
   const arcEnd = arcStart + (arcSweep * percent);
 
-  const path = describeArc(centerX, centerY, radius, arcStart, arcEnd);
-  document.getElementById("engine").setAttribute("d", path);
+  const arc = describeArc(centerX, centerY, radius, arcStart, arcEnd);
+  document.getElementById("engine").setAttribute("d", arc);
 }
 
 function setEngine(health) {
