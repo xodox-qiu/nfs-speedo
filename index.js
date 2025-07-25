@@ -1,5 +1,6 @@
 let elements = {};
 let speed = 0;
+let engineHealth = 0; // Default engine health
 
 function polarToCartesian(cx, cy, r, angleDeg) {
     const angleRad = (angleDeg - 90) * Math.PI / 180.0;
@@ -10,15 +11,16 @@ function polarToCartesian(cx, cy, r, angleDeg) {
 }
 
 function describeArc(x, y, radius, startAngle, endAngle) {
-    const start = polarToCartesian(x, y, radius, endAngle);
-    const end = polarToCartesian(x, y, radius, startAngle);
+    const start = polarToCartesian(x, y, radius, startAngle);
+    const end = polarToCartesian(x, y, radius, endAngle);
     const largeArcFlag = Math.abs(endAngle - startAngle) <= 180 ? "0" : "1";
 
     return [
         "M", start.x, start.y,
-        "A", radius, radius, 0, largeArcFlag, 0, end.x, end.y
+        "A", radius, radius, 0, largeArcFlag, 1, end.x, end.y
     ].join(" ");
 }
+
 
 function setSpeedoArc(percent) {
     percent = Math.max(0, Math.min(1, percent));
@@ -291,7 +293,7 @@ function setEngineHealth(percent) {
   const centerY = 170;
   const radius = 145;          // should match your SVG radius
   const arcStart = -92;        // tweak so arc aligns nicely
-  const arcSweep = 276;        // total degrees the arc covers
+  const arcSweep = 139;        // total degrees the arc covers
 
   const arcEnd = arcStart + (arcSweep * percent);
 
@@ -323,7 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // setSpeed(randoms);  // Set speed to 50 mph
     // setGear(randomg);    // Set gear to 3
     // setFuel(random);     // Set fuel to a random value between 0 and 1
-    // setEngineHealth(0.5); // Set engine health to a random value between 0.6 and 1.0
+    // setEngineHealth(); // Set engine health to a random value between 0.6 and 1.0
     // }, 1000); // Update speed and gear every second
 
 //     let currentSpeed = 0;
