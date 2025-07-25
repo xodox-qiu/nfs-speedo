@@ -287,6 +287,8 @@ function setEngineBgArc(percent) {
 setEngineBgArc(0.5); // Set initial engine arc to 50%
 
 function setEngineHealth(percent) {
+    percent = Math.max(0, Math.min(1, percent));
+
   const centerX = 170;
   const centerY = 170;
   const radius = 145;
@@ -312,7 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pointer: document.getElementById("speedPointer"),
         rpmRedline: document.getElementById('rpmRedline'),
         fuelHealth: document.getElementById("fuelValue"),
-        engineHealth: document.getElementById('engineValue')
+        engineHealth: document.getElementById('engineValue'),
         };
 
     // setInterval(() => {
