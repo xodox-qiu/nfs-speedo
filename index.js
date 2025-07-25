@@ -303,10 +303,6 @@ function setEngineHealth(percent) {
 }
 
 function setEngine(health) {
-    if (state) {
-        currentEngineHealth = 0;
-        setEngineHealth(currentEngineHealth);
-    }
   elements.engineHealth.innerText = `${(health * 100).toFixed(1)}%`; // optional UI update
   setEngineHealth(health);
 }
@@ -318,7 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pointer: document.getElementById("speedPointer"),
         rpmRedline: document.getElementById('rpmRedline'),
         fuelHealth: document.getElementById("fuelValue"),
-        engineHealth: document.getElementById("engine"),
+        engineHealth: document.getElementById("engine")
         }
 
     // setInterval(() => {
