@@ -1,6 +1,5 @@
 let elements = {};
 let speed = 0;
-let engineHealth = 0; // Default engine health
 
 function polarToCartesian(cx, cy, r, angleDeg) {
     const angleRad = (angleDeg - 90) * Math.PI / 180.0;
@@ -11,13 +10,14 @@ function polarToCartesian(cx, cy, r, angleDeg) {
 }
 
 function describeArc(x, y, radius, startAngle, endAngle) {
-    const start = polarToCartesian(x, y, radius, startAngle);
-    const end = polarToCartesian(x, y, radius, endAngle);
-    const largeArcFlag = Math.abs(endAngle - startAngle) <= 180 ? "0" : "1";
+    const start = polarToCartesian(x, y, radius, endAngle);
+    const end = polarToCartesian(x, y, radius, startAngle);
+
+    const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
 
     return [
         "M", start.x, start.y,
-        "A", radius, radius, 0, largeArcFlag, 1, end.x, end.y
+        "A", radius, radius, 0, largeArcFlag, 0, end.x, end.y
     ].join(" ");
 }
 
@@ -298,12 +298,12 @@ function setEngineHealth(percent) {
   const arcEnd = arcStart + (arcSweep * percent);
 
   const path = describeArc(centerX, centerY, radius, arcStart, arcEnd);
-  document.getElementById("engineValue").setAttribute("d", path);
+  document.getElementById("engine").setAttribute("d", path);
 }
 
 function setEngine(health) {
   elements.engineHealthValue.innerText = `${(health * 100).toFixed(1)}%`; // optional UI update
-  setEngineHealth(health); // visually update the arc
+  setEngineHealth(health);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -313,7 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pointer: document.getElementById("speedPointer"),
         rpmRedline: document.getElementById('rpmRedline'),
         fuelHealth: document.getElementById("fuelValue"),
-        engineHealthValue: document.getElementById("engineValue"),
+        engineHealthValue: document.getElementById("engine"),
         }
 
     // setInterval(() => {
@@ -325,7 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // setSpeed(randoms);  // Set speed to 50 mph
     // setGear(randomg);    // Set gear to 3
     // setFuel(random);     // Set fuel to a random value between 0 and 1
-    // setEngineHealth(1); // Set engine health to a random value between 0.6 and 1.0
+    // setEngineHealth(0.9); // Set engine health to a random value between 0.6 and 1.0
     // }, 1000); // Update speed and gear every second
 
 //     let currentSpeed = 0;
