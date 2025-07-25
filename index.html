@@ -27,6 +27,17 @@
         </defs>
         <circle cx="50" cy="50" r="45" fill="#0202029c" mask="url(#biteMask)" stroke="#999" stroke-width="0"/>
         </svg>
+        <svg viewBox="0 0 300 300" class="arc-container">
+              <defs>
+                <clipPath id="diagonal-cut">
+                <polygon points="0,0 400,0 200,110 0,200" />
+                </clipPath>
+            </defs>
+            <path id="engineArcBg" class="enginebg-arc" clip-path="url(#diagonal-cut)"/>
+            <path id="engineArc" class="engine-arc" clip-path="url(#diagonal-cut)"/>
+            <path id="engineValue" class="engine-health" clip-path="url(#diagonal-cut)"/>
+        </svg>
+        <div class="engineticks"></div>
         <div class="smallticks"></div>
         <div class="inside-circle"></div>
         <div class="inside-smallcircle"></div>

@@ -64,6 +64,20 @@ function createSmallTicks() {
 }
 createSmallTicks();
 
+function createEngineTicks() {
+    const ticksContainer = document.querySelector('.engineticks');
+    const tickCount = 10;
+    
+    for (let i = 0; i < tickCount; i++) {
+        const tick = document.createElement('div');
+        tick.className = 'enginetick';
+        const angle = (i / (tickCount - 1)) * 222 - 114;
+        tick.style.transform = `rotate(${angle}deg) translateY(-131px)`;
+        ticksContainer.appendChild(tick);
+    }
+}
+createEngineTicks();
+
 function setInsideArc(percent) {
     percent = Math.max(0, Math.min(1, percent));
 
@@ -238,14 +252,67 @@ function setFuel(fuel) {
     setSmallFuelPointer(fuel); // rotate the pointer visually
 }
 
+function setEngineArc(percent) {
+  percent = Math.max(0, Math.min(1, percent));
+
+  const centerX = 170;
+  const centerY = 170;
+  const radius = 145;          // larger radius than speedo (which is 87)
+  const arcStart = -92;        // tweak start angle so it fits nicely around speedo
+  const arcSweep = 276;        // arc sweep length in degrees
+
+  const arcEnd = arcStart + (arcSweep * percent);
+
+  const path = describeArc(centerX, centerY, radius, arcStart, arcEnd);
+  document.getElementById("engineArc").setAttribute("d", path);
+}
+setEngineArc(0.5); // Set initial engine arc to 50%
+
+function setEngineBgArc(percent) {
+  percent = Math.max(0, Math.min(1, percent));
+
+  const centerX = 170;
+  const centerY = 170;
+  const radius = 145;          // larger radius than speedo (which is 87)
+  const arcStart = -93;        // tweak start angle so it fits nicely around speedo
+  const arcSweep = 280;        // arc sweep length in degrees
+
+  const arcEnd = arcStart + (arcSweep * percent);
+
+  const path = describeArc(centerX, centerY, radius, arcStart, arcEnd);
+  document.getElementById("engineArcBg").setAttribute("d", path);
+}
+setEngineBgArc(0.5); // Set initial engine arc to 50%
+
+function setEngineHealth(percent) {
+  percent = Math.max(0, Math.min(1, percent)); // Clamp between 0 and 1
+
+  const centerX = 170;
+  const centerY = 170;
+  const radius = 145;          // should match your SVG radius
+  const arcStart = -92;        // tweak so arc aligns nicely
+  const arcSweep = 276;        // total degrees the arc covers
+
+  const arcEnd = arcStart + (arcSweep * percent);
+
+  const path = describeArc(centerX, centerY, radius, arcStart, arcEnd);
+  document.getElementById("engineValue").setAttribute("d", path);
+}
+
+function setEngine(health) {
+  elements.engineHealthValue.innerText = `${(health * 100).toFixed(1)}%`; // optional UI update
+  setEngineHealth(health); // visually update the arc
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     elements = {
         speedValue: document.getElementById("speedValue"),
         gearValue: document.getElementById("gearValue"),
         pointer: document.getElementById("speedPointer"),
         rpmRedline: document.getElementById('rpmRedline'),
-        fuelHealth: document.getElementById("fuelValue") // ✅ Add this line
-    }
+        fuelHealth: document.getElementById("fuelValue"),
+        engineHealthValue: document.getElementById("engineValue"),
+        }
 
     // setInterval(() => {
     // const random = Math.random();
@@ -256,6 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // setSpeed(randoms);  // Set speed to 50 mph
     // setGear(randomg);    // Set gear to 3
     // setFuel(random);     // Set fuel to a random value between 0 and 1
+    // setEngineHealth(0.5); // Set engine health to a random value between 0.6 and 1.0
     // }, 1000); // Update speed and gear every second
 
 //     let currentSpeed = 0;

@@ -3,8 +3,8 @@ html, body {
 }
 
 body {
-  background: transparent !important;
-  /* background: rgb(48, 48, 48); */
+  /* background: transparent !important; */
+  background: rgb(131, 131, 131);
   margin: 0;
   padding: 0;
   user-select: none;
@@ -246,7 +246,44 @@ body {
     left: -9999px; /* optionally move it offscreen */
 }
 
-.color {
-  color: #0202029c;
+.arc-container {
+  position: absolute;
+  top: -50px;
+  left: -48px;
+  width: 350px;
+  height: 350px;
+  rotate: 2deg;
 }
+
+.engine-arc {
+  stroke: #74747479;
+  stroke-width: 20;
+  fill: none;
+  stroke-linecap: butt;
+  opacity: 0.7;
+  z-index: 4;
+}
+
+.engine-health {
+  stroke: #14fbff;
+  stroke-width: 20;
+  fill: none;
+  stroke-linecap: butt;
+  opacity: 0.8;
+  z-index: 4;
+}
+
+.enginebg-arc {
+  stroke: #2b2b2bd2;
+  stroke-width: 24;
+  fill: none;
+  stroke-linecap: butt;
+  opacity: 0.7;
+  z-index: 1;
+}
+
+
+/* .color {
+  color: #0202029c;
+} */
 
