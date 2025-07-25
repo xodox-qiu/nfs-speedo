@@ -73,8 +73,8 @@ function createEngineTicks() {
     for (let i = 0; i < tickCount; i++) {
         const tick = document.createElement('div');
         tick.className = 'enginetick';
-        const angle = (i / (tickCount - 1)) * 222 - 114;
-        tick.style.transform = `rotate(${angle}deg) translateY(-131px)`;
+        const angle = (i / (tickCount + 9)) * 254 - 114;
+        tick.style.transform = `rotate(${angle}deg) translateY(-160px)`;
         ticksContainer.appendChild(tick);
     }
 }
@@ -325,7 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // setSpeed(randoms);  // Set speed to 50 mph
     // setGear(randomg);    // Set gear to 3
     // setFuel(random);     // Set fuel to a random value between 0 and 1
-    // setEngineHealth(); // Set engine health to a random value between 0.6 and 1.0
+    // setEngineHealth(1); // Set engine health to a random value between 0.6 and 1.0
     // }, 1000); // Update speed and gear every second
 
 //     let currentSpeed = 0;

@@ -3,8 +3,8 @@ html, body {
 }
 
 body {
-  background: transparent !important;
-  /* background: rgb(131, 131, 131); */
+  /* background: transparent !important; */
+  background: rgb(131, 131, 131);
   margin: 0;
   padding: 0;
   user-select: none;
@@ -99,6 +99,24 @@ body {
     stroke: #4747476c;
     stroke-width: 18;
     fill: none;
+}
+
+.engineticks {
+    position: absolute;
+    top: 145px;
+    right: 145px;
+    transform: rotate(31deg);
+    pointer-events: none;
+}
+
+.enginetick {
+    position: absolute;
+    width: 3px;
+    height: 9px;
+    background: #2b2b2bc5;
+    transform-origin: bottom center;
+    border-radius: 15%;
+    opacity: 0.6;
 }
 
 .smallticks {
@@ -274,7 +292,7 @@ body {
 }
 
 .enginebg-arc {
-  stroke: #2b2b2bd2;
+  stroke: #2b2b2bc5;
   stroke-width: 24;
   fill: none;
   stroke-linecap: butt;
