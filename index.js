@@ -203,8 +203,33 @@ function setSpeed(targetSpeed) {
     animate();
 }
 
+let previousGear = null;
+
 function setGear(gearValue) {
     elements.gearValue.innerText = String(gearValue);
+
+    const arrowElement = document.getElementById("gearArrow");
+    
+    if (previousGear !== null) {
+        if (gearValue > previousGear) {
+            arrowElement.innerText = "▲";
+            arrowElement.style.opacity = 1;
+            arrowElement.style.color = '#00ff00'; // Green for upshift
+        } else if (gearValue < previousGear) {
+            arrowElement.innerText = "▼";
+            arrowElement.style.opacity = 1;
+            arrowElement.style.color = '#ff0000'; // Red for downshift
+        } else {
+            arrowElement.style.opacity = 0;
+        }
+
+        // Hide arrow after 500ms
+        setTimeout(() => {
+            arrowElement.style.opacity = 0;
+        }, 700);
+    }
+
+    previousGear = gearValue;
 }
 
 function setSmallSpeedoRedline(startPercent, endPercent) {
