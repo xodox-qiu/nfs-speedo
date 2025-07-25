@@ -1,5 +1,7 @@
 let elements = {};
 let speed = 0;
+let engineHealth = 0;
+let currentEngineHealth = 0; // full health at start
 
 function polarToCartesian(cx, cy, r, angleDeg) {
     const angleRad = (angleDeg - 90) * Math.PI / 180.0;
@@ -185,13 +187,13 @@ function setSpeed(targetSpeed) {
         }
 
         // Clamp to 0–100 range
-        const clampedSpeed = Math.max(0, Math.min(100, currentSpeed));
+        const clampedSpeed = Math.max(0, Math.min(80, currentSpeed));
 
         // Update the number (MPH)
         elements.speedValue.innerText = `${Math.round(clampedSpeed * 2.236936)}`;
 
         // Update the pointer
-        const percent = clampedSpeed / 100;
+        const percent = clampedSpeed / 80;
         setTriangleBySpeed(percent);
 
         // Keep animating if still not reached target
@@ -301,6 +303,10 @@ function setEngineHealth(percent) {
 }
 
 function setEngine(health) {
+    if (state) {
+        currentEngineHealth = 0;
+        setEngineHealth(currentEngineHealth);
+    }
   elements.engineHealth.innerText = `${(health * 100).toFixed(1)}%`; // optional UI update
   setEngineHealth(health);
 }
@@ -321,10 +327,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // const randomg = Math.floor(Math.random() * 7); // Random gear between 1 and 6
 
     // setTriangleBySpeed(0); // Set initial speed to 50 mph
-    // setSpeed(randoms);  // Set speed to 50 mph
+    // setSpeed(100);  // Set speed to 50 mph
     // setGear(randomg);    // Set gear to 3
     // setFuel(random);     // Set fuel to a random value between 0 and 1
-    // setEngineHealth(0); // Set engine health to a random value between 0.6 and 1.0
+    // setEngineHealth(1); // Set engine health to a random value between 0.6 and 1.0
     // }, 1000); // Update speed and gear every second
 
 //     let currentSpeed = 0;
