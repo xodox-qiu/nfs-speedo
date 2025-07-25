@@ -287,24 +287,21 @@ function setEngineBgArc(percent) {
 setEngineBgArc(0.5); // Set initial engine arc to 50%
 
 function setEngineHealth(percent) {
-    percent = Math.max(0, Math.min(1, percent));
-
-  const centerX = 170;
-  const centerY = 170;
-  const radius = 145;
+    const centerX = 170;
+    const centerY = 170;
+    const radius = 145;
   
-  const arcStart = -92;
-  const arcSweep = 138.7;
+    const arcStart = -92;
+    const arcSweep = 138.7;
+    const arcEnd = arcStart + (arcSweep * percent);
 
-  const arcEnd = arcStart + (arcSweep * percent);
-
-  const arc = describeArc(centerX, centerY, radius, arcStart, arcEnd);
-  document.getElementById("engineValue").setAttribute("d", arc);
+    const arc = describeArc(centerX, centerY, radius, arcStart, arcEnd);
+    document.getElementById("engine").setAttribute("d", arc);
 }
 
-function setEngine(health) {
-  elements.engineHealth.innerText = `${(health * 100).toFixed(1)}%`; // optional UI update
-  setEngineHealth(health);
+function setHealth(health) {
+    elements.engineHealth.innerText = `${(health * 100).toFixed(1)}%`; // optional UI update
+    setEngineHealth(health); // update the arc visually
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -314,7 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pointer: document.getElementById("speedPointer"),
         rpmRedline: document.getElementById('rpmRedline'),
         fuelHealth: document.getElementById("fuelValue"),
-        engineHealth: document.getElementById('engineValue'),
+        engineHealth: document.getElementById('engine'),
         };
 
     // setInterval(() => {
@@ -326,7 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // setSpeed(100);  // Set speed to 50 mph
     // setGear(randomg);    // Set gear to 3
     // setFuel(random);     // Set fuel to a random value between 0 and 1
-    // setEngine(0.5); // Set engine health to a random value between 0.6 and 1.0
+    // setEngineHealth(0.5); // Set engine health to a random value between 0.6 and 1.0
     // }, 1000); // Update speed and gear every second
 
 //     let currentSpeed = 0;
