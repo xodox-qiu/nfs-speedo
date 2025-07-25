@@ -207,7 +207,7 @@ body {
 
 .speed {
   position: absolute;
-  font-size: 36px;
+  font-size: 34px;
   right: -45px;
   bottom: 13px;
   font-family: "Bebas Neue", sans-serif;
@@ -217,8 +217,8 @@ body {
 .speed-display {
   position: absolute;
   font-size: 30px;
-  right: -25px;
-  bottom: -15px;
+  right: -23px;
+  bottom: -22px;
   font-family: "Intel One Mono", monospace;
   color: white;
 }
