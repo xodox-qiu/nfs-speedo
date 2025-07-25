@@ -11,8 +11,8 @@ html, body {
 }
 
 body {
-  /* background: transparent !important; */
-  background: rgb(131, 131, 131);
+  background: transparent !important;
+  /* background: rgb(131, 131, 131); */
   margin: 0;
   padding: 0;
   user-select: none;
@@ -192,9 +192,9 @@ body {
   position: absolute;
   transform: translate(-50%, -50%);
   font-size: 22px;
-  font-family: "Bebas Neue", sans-serif;
+  font-family: "Intel One Mono", monospace;
   font-weight: bold;
-  color: white;
+  color: rgb(221, 221, 221);
 }
 
 .speedo-container {
