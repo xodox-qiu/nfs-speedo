@@ -292,12 +292,12 @@ function setEngineHealth(percent) {
   const radius = 145;
   
   const arcStart = -92;
-  const arcSweep = 139;
+  const arcSweep = 138.7;
 
   const arcEnd = arcStart + (arcSweep * percent);
 
   const arc = describeArc(centerX, centerY, radius, arcStart, arcEnd);
-  document.getElementById("engine").setAttribute("d", arc);
+  document.getElementById("engineValue").setAttribute("d", arc);
 }
 
 function setEngine(health) {
@@ -312,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pointer: document.getElementById("speedPointer"),
         rpmRedline: document.getElementById('rpmRedline'),
         fuelHealth: document.getElementById("fuelValue"),
-        engineHealth: document.getElementById('engine')
+        engineHealth: document.getElementById('engineValue')
         };
 
     // setInterval(() => {
@@ -324,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // setSpeed(100);  // Set speed to 50 mph
     // setGear(randomg);    // Set gear to 3
     // setFuel(random);     // Set fuel to a random value between 0 and 1
-    // setEngineHealth(0.8); // Set engine health to a random value between 0.6 and 1.0
+    // setEngine(0.5); // Set engine health to a random value between 0.6 and 1.0
     // }, 1000); // Update speed and gear every second
 
 //     let currentSpeed = 0;
