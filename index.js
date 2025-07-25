@@ -287,7 +287,6 @@ function setEngineBgArc(percent) {
 setEngineBgArc(0.5); // Set initial engine arc to 50%
 
 function setEngineHealth(percent) {
-  percent = Math.max(0, Math.min(1, percent)); // Clamp between 0 and 1
 
   const centerX = 170;
   const centerY = 170;
@@ -302,7 +301,7 @@ function setEngineHealth(percent) {
 }
 
 function setEngine(health) {
-  elements.engineHealthValue.innerText = `${(health * 100).toFixed(1)}%`; // optional UI update
+  elements.engineHealth.innerText = `${(health * 100).toFixed(1)}%`; // optional UI update
   setEngineHealth(health);
 }
 
@@ -313,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pointer: document.getElementById("speedPointer"),
         rpmRedline: document.getElementById('rpmRedline'),
         fuelHealth: document.getElementById("fuelValue"),
-        engineHealthValue: document.getElementById("engine"),
+        engineHealth: document.getElementById("engine"),
         }
 
     // setInterval(() => {
@@ -325,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // setSpeed(randoms);  // Set speed to 50 mph
     // setGear(randomg);    // Set gear to 3
     // setFuel(random);     // Set fuel to a random value between 0 and 1
-    // setEngineHealth(0.9); // Set engine health to a random value between 0.6 and 1.0
+    // setEngineHealth(0); // Set engine health to a random value between 0.6 and 1.0
     // }, 1000); // Update speed and gear every second
 
 //     let currentSpeed = 0;
