@@ -3,8 +3,8 @@ html, body {
 }
 
 body {
-  /* background: transparent !important; */
-  background: rgb(131, 131, 131);
+  background: transparent !important;
+  /* background: rgb(131, 131, 131); */
   margin: 0;
   padding: 0;
   user-select: none;
