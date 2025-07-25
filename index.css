@@ -3,8 +3,8 @@ html, body {
 }
 
 body {
-  /* background: transparent !important; */
-  background: rgb(131, 131, 131);
+  background: transparent !important;
+  /* background: rgb(131, 131, 131); */
   margin: 0;
   padding: 0;
   user-select: none;
@@ -278,7 +278,7 @@ body {
   stroke-width: 20;
   fill: none;
   stroke-linecap: butt;
-  opacity: 0.7;
+  opacity: 0.9;
   z-index: 4;
 }
 
@@ -287,16 +287,15 @@ body {
   stroke-width: 20;
   fill: none;
   stroke-linecap: butt;
-  opacity: 0.8;
+  opacity: 1;
   z-index: 4;
 }
 
 .enginebg-arc {
-  stroke: #2b2b2bc5;
+  stroke: #0202029c;
   stroke-width: 24;
   fill: none;
   stroke-linecap: butt;
-  opacity: 0.7;
   z-index: 1;
 }
 
