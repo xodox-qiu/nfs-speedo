@@ -1,6 +1,9 @@
 let elements = {};
 let speed = 0;
 let previousGear = null;
+const maxSpeed = 60; // Maximum speed in mph
+let currentSpeedPercent = 0;
+let speedAnimationFrame;
 
 function polarToCartesian(cx, cy, r, angleDeg) {
     const angleRad = (angleDeg - 90) * Math.PI / 180.0;
@@ -128,19 +131,36 @@ function setSmallArc(percent) {
 }
 setSmallArc(0.5);
 
-function setTriangleBySpeed(percent) {
-    percent = Math.max(0, Math.min(1, percent));
+function setTriangleBySpeed(targetPercent) {
+    cancelAnimationFrame(speedAnimationFrame);
 
-    const minAngle = 0;   // Leftmost position
-    const maxAngle = 234;  // Rightmost position
+    const minAngle = 0;
+    const maxAngle = 234;
+    const speed = 0.2;
 
-    const angle = minAngle + (maxAngle - minAngle) * percent;
+    function animate() {
+        const diff = targetPercent - currentSpeedPercent;
 
-    const triangle = document.getElementById("speedPointer");
-    triangle.style.transform = `rotate(${angle}deg)`;
+        if (Math.abs(diff) < 0.001) {
+            currentSpeedPercent = targetPercent;
+        } else {
+            currentSpeedPercent += diff * speed;
+        }
+
+        const angle = minAngle + (maxAngle - minAngle) * currentSpeedPercent;
+
+        const triangle = document.getElementById("speedPointer");
+        if (triangle) {
+            triangle.style.transform = `rotate(${angle}deg)`;
+        }
+
+        if (Math.abs(diff) >= 0.001) {
+            speedAnimationFrame = requestAnimationFrame(animate);
+        }
+    }
+
+    animate();
 }
-
-setTriangleBySpeed(0);  // halfway
 
 function createCircularNumbers() {
     const container = document.querySelector('.circular-number');
@@ -166,41 +186,12 @@ function createCircularNumbers() {
 }
 createCircularNumbers();
 
-let currentSpeed = 0;
-let speedAnimationFrame;
-const maxSpeed = 100.3; // in m/s (about 216 km/h or 134 mph)
-
-function setSpeed(targetSpeed) {
-    cancelAnimationFrame(speedAnimationFrame);
-
-    const animationSpeed = 0.2; // adjust for smoothness
-
-    function animate() {
-        const diff = targetSpeed - currentSpeed;
-
-        if (Math.abs(diff) < 0.001) {
-            currentSpeed = targetSpeed;
-        } else {
-            currentSpeed += diff * animationSpeed;
-        }
-
-        // Convert current speed (m/s) to MPH
-        const mph = currentSpeed * 2.236936;
-        elements.speedValue.innerText = `${Math.round(mph)}`;
-
-        // Get percent relative to max speed
-        const percent = Math.min(currentSpeed / maxSpeed, 1); // Clamp to 1
-        setTriangleBySpeed(percent); // update UI (e.g., pointer/triangle)
-
-        // Continue animation if needed
-        if (Math.abs(diff) >= 0.001) {
-            speedAnimationFrame = requestAnimationFrame(animate);
-        }
-    }
-
-    animate();
+function setSpeed(speedValue) {
+    elements.speedValue.innerText = `${Math.round(speedValue * 2.236936)}`;
+    
+    const percent = Math.min(speedValue / maxSpeed, 1);
+    setTriangleBySpeed(percent);
 }
-
 
 function setGear(gearValue) {
     elements.gearValue.innerText = String(gearValue);
