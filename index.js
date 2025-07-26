@@ -1,9 +1,6 @@
 let elements = {};
 let speed = 0;
 let previousGear = null;
-const maxSpeed = 60; // Maximum speed in mph
-let currentSpeedPercent = 0;
-let speedAnimationFrame;
 
 function polarToCartesian(cx, cy, r, angleDeg) {
     const angleRad = (angleDeg - 90) * Math.PI / 180.0;
@@ -131,6 +128,9 @@ function setSmallArc(percent) {
 }
 setSmallArc(0.5);
 
+let currentSpeedPercent = 0;
+let speedAnimationFrame;
+
 function setTriangleBySpeed(targetPercent) {
     cancelAnimationFrame(speedAnimationFrame);
 
@@ -187,11 +187,15 @@ function createCircularNumbers() {
 createCircularNumbers();
 
 function setSpeed(speedValue) {
+    // speedValue is expected to be between 0 and 1
+    // Display speed as mph (scaled by 2.236936)
     elements.speedValue.innerText = `${Math.round(speedValue * 2.236936)}`;
-    
-    const percent = Math.min(speedValue / maxSpeed, 1);
-    setTriangleBySpeed(percent);
+
+    // Animate needle directly with the percent
+    setTriangleBySpeed(speedValue);
 }
+
+
 
 function setGear(gearValue) {
     elements.gearValue.innerText = String(gearValue);
