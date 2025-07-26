@@ -1,5 +1,6 @@
 let elements = {};
 let speed = 0;
+let previousGear = null;
 
 function polarToCartesian(cx, cy, r, angleDeg) {
     const angleRad = (angleDeg - 90) * Math.PI / 180.0;
@@ -20,7 +21,6 @@ function describeArc(x, y, radius, startAngle, endAngle) {
         "A", radius, radius, 0, largeArcFlag, 0, end.x, end.y
     ].join(" ");
 }
-
 
 function setSpeedoArc(percent) {
     percent = Math.max(0, Math.min(1, percent));
@@ -167,35 +167,33 @@ function createCircularNumbers() {
 createCircularNumbers();
 
 let currentSpeed = 0;
-let speedAnimationFrame = null;
+let speedAnimationFrame;
+const maxSpeed = 100.3; // in m/s (about 216 km/h or 134 mph)
 
 function setSpeed(targetSpeed) {
-    // Cancel any ongoing animation
     cancelAnimationFrame(speedAnimationFrame);
 
-    const animationSpeed = 0.2; // How fast it animates (0.1 – 0.3 is smooth)
+    const animationSpeed = 0.2; // adjust for smoothness
 
     function animate() {
         const diff = targetSpeed - currentSpeed;
 
-        if (Math.abs(diff) < 0.05) {
+        if (Math.abs(diff) < 0.001) {
             currentSpeed = targetSpeed;
         } else {
             currentSpeed += diff * animationSpeed;
         }
 
-        // Clamp to 0–100 range
-        const clampedSpeed = Math.max(0, Math.min(80, currentSpeed));
+        // Convert current speed (m/s) to MPH
+        const mph = currentSpeed * 2.236936;
+        elements.speedValue.innerText = `${Math.round(mph)}`;
 
-        // Update the number (MPH)
-        elements.speedValue.innerText = `${Math.round(clampedSpeed * 2.236936)}`;
+        // Get percent relative to max speed
+        const percent = Math.min(currentSpeed / maxSpeed, 1); // Clamp to 1
+        setTriangleBySpeed(percent); // update UI (e.g., pointer/triangle)
 
-        // Update the pointer
-        const percent = clampedSpeed / 80;
-        setTriangleBySpeed(percent);
-
-        // Keep animating if still not reached target
-        if (Math.abs(diff) >= 0.05) {
+        // Continue animation if needed
+        if (Math.abs(diff) >= 0.001) {
             speedAnimationFrame = requestAnimationFrame(animate);
         }
     }
@@ -203,7 +201,6 @@ function setSpeed(targetSpeed) {
     animate();
 }
 
-let previousGear = null;
 
 function setGear(gearValue) {
     elements.gearValue.innerText = String(gearValue);
@@ -345,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // const randomg = Math.floor(Math.random() * 7); // Random gear between 1 and 6
 
     // setTriangleBySpeed(0); // Set initial speed to 50 mph
-    // setSpeed(100);  // Set speed to 50 mph
+    // setSpeed(randoms);  // Set speed to 50 mph
     // setGear(randomg);    // Set gear to 3
     // setFuel(random);     // Set fuel to a random value between 0 and 1
     // setEngineHealth(0.5); // Set engine health to a random value between 0.6 and 1.0
