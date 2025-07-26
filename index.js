@@ -129,38 +129,56 @@ function setSmallArc(percent) {
 setSmallArc(0.5);
 
 let currentSpeedPercent = 0;
-let speedAnimationFrame;
+let speedAnimationFrame = null;
+let targetSpeedPercent = 0;
 
-function setTriangleBySpeed(targetPercent) {
-    cancelAnimationFrame(speedAnimationFrame);
-
-    const minAngle = 0;
-    const maxAngle = 234;
-    const speed = 0.2;
-
-    function animate() {
-        const diff = targetPercent - currentSpeedPercent;
-
-        if (Math.abs(diff) < 0.001) {
-            currentSpeedPercent = targetPercent;
-        } else {
-            currentSpeedPercent += diff * speed;
-        }
-
-        const angle = minAngle + (maxAngle - minAngle) * currentSpeedPercent;
-
-        const triangle = document.getElementById("speedPointer");
-        if (triangle) {
-            triangle.style.transform = `rotate(${angle}deg)`;
-        }
-
-        if (Math.abs(diff) >= 0.001) {
-            speedAnimationFrame = requestAnimationFrame(animate);
-        }
-    }
-
-    animate();
+function normalizePercent(value) {
+  // Normalize any number to range 0..1 without clamping
+  // For example, if value > 1, wrap it around modulo 1
+  // If negative, wrap around too (add 1)
+  let normalized = value % 1;
+  if (normalized < 0) normalized += 1;
+  return normalized;
 }
+
+function setTriangleBySpeed(newTargetPercent) {
+  // Normalize input to [0..1) without clamping
+  targetSpeedPercent = normalizePercent(newTargetPercent);
+
+  if (!speedAnimationFrame) {
+    animate();
+  }
+}
+
+function animate() {
+  const minAngle = 0;
+  const maxAngle = 234;
+  const speed = 0.2;
+
+  let diff = targetSpeedPercent - currentSpeedPercent;
+
+  // Fix diff if wrapping around causes big jump:
+  if (diff > 0.5) diff -= 1;
+  else if (diff < -0.5) diff += 1;
+
+  if (Math.abs(diff) < 0.001) {
+    currentSpeedPercent = targetSpeedPercent;
+    speedAnimationFrame = null; // Done animating
+  } else {
+    currentSpeedPercent += diff * speed;
+    // Keep currentSpeedPercent wrapped in 0..1 too
+    currentSpeedPercent = (currentSpeedPercent + 1) % 1;
+
+    speedAnimationFrame = requestAnimationFrame(animate);
+  }
+
+  const angle = minAngle + (maxAngle - minAngle) * currentSpeedPercent;
+  const triangle = document.getElementById("speedPointer");
+  if (triangle) {
+    triangle.style.transform = `rotate(${angle}deg)`;
+  }
+}
+
 
 function createCircularNumbers() {
     const container = document.querySelector('.circular-number');
