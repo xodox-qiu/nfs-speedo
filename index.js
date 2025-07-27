@@ -130,47 +130,42 @@ setSmallArc(0.5);
 
 let currentSpeed = 0;
 let speedAnimationFrame = null;
-let adaptiveMaxSpeed = 100; // start with something reasonable
-
 
 function setTriangleBySpeed(targetSpeed) {
     cancelAnimationFrame(speedAnimationFrame);
 
-    const minAngle = 0;
-    const maxAngle = 234;
-    const speed = 0.2;
-
-    // Dynamically adjust max speed range
-    const paddedTarget = targetSpeed * 1.1; // add 10% padding
-    adaptiveMaxSpeed = Math.max(adaptiveMaxSpeed * 0.95 + paddedTarget * 0.05, 1); // smooth update, never zero
+    const speedStep = 0.2;
+    const degreesPerUnit = 2.4; // 1 speed unit = 1.5 degrees
+    const minAngle = 0; // optional
+    const maxAngle = 234; // optional clamp range (to stop wild rotation)
 
     function animate() {
         const diff = targetSpeed - currentSpeed;
 
-        if (Math.abs(diff) < 0.001) {
+        if (Math.abs(diff) < 0.01) {
             currentSpeed = targetSpeed;
         } else {
-            currentSpeed += diff * speed;
+            currentSpeed += diff * speedStep;
         }
 
-        // Dynamic scaling based on adaptive max
-        const percent = Math.max(0, Math.min(currentSpeed / adaptiveMaxSpeed, 1));
-        const angle = minAngle + (maxAngle - minAngle) * percent;
+        // Map directly to degrees
+        let angle = currentSpeed * degreesPerUnit;
+
+        // Optional clamp to avoid over-rotation:
+        angle = Math.max(minAngle, Math.min(angle, maxAngle));
 
         const triangle = document.getElementById("speedPointer");
         if (triangle) {
             triangle.style.transform = `rotate(${angle}deg)`;
         }
 
-        if (Math.abs(diff) >= 0.001) {
+        if (Math.abs(diff) >= 0.01) {
             speedAnimationFrame = requestAnimationFrame(animate);
         }
     }
 
     animate();
 }
-
-
 
 function createCircularNumbers() {
     const container = document.querySelector('.circular-number');
@@ -340,7 +335,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // const randoms = Math.random() * 50;
     // const randomg = Math.floor(Math.random() * 7); // Random gear between 1 and 6
 
-    // setSpeed(1);  // Set speed to 50 mph
+    // setSpeed(100);  // Set speed to 50 mph
     // setGear(randomg);    // Set gear to 3
     // setFuel(random);     // Set fuel to a random value between 0 and 1
     // setEngineHealth(0.5); // Set engine health to a random value between 0.6 and 1.0
