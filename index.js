@@ -131,35 +131,35 @@ setSmallArc(0.5);
 let currentSpeed = 0;
 let speedAnimationFrame = null;
 
+const minAngle = 0;       // Start angle of your speedometer arc
+const maxAngle = 234;     // Sweep angle of your speedometer arc
+const maxSpeed = 100;     // Max speed to normalize against (adjust to your design)
+const step = 0.2;         // Animation smoothing factor
+
 function setTriangleBySpeed(targetSpeed) {
     cancelAnimationFrame(speedAnimationFrame);
 
-    const speedStep = 0.2;
-    const degreesPerUnit = 2.4; // 1 speed unit = 1.5 degrees
-    const minAngle = 0; // optional
-    const maxAngle = 234; // optional clamp range (to stop wild rotation)
+    // Normalize speed from 0 to 1, clamped
+    let normalizedSpeed = Math.min(Math.max(targetSpeed / maxSpeed, 0), 1);
 
     function animate() {
-        const diff = targetSpeed - currentSpeed;
+        const diff = normalizedSpeed - currentSpeed;
 
-        if (Math.abs(diff) < 0.01) {
-            currentSpeed = targetSpeed;
+        if (Math.abs(diff) < 0.001) {
+            currentSpeed = normalizedSpeed;
         } else {
-            currentSpeed += diff * speedStep;
+            currentSpeed += diff * step;
         }
 
-        // Map directly to degrees
-        let angle = currentSpeed * degreesPerUnit;
-
-        // Optional clamp to avoid over-rotation:
-        angle = Math.max(minAngle, Math.min(angle, maxAngle));
+        // Map normalized currentSpeed to angle sweep
+        const angle = minAngle + currentSpeed * (maxAngle - minAngle);
 
         const triangle = document.getElementById("speedPointer");
         if (triangle) {
             triangle.style.transform = `rotate(${angle}deg)`;
         }
 
-        if (Math.abs(diff) >= 0.01) {
+        if (Math.abs(diff) >= 0.001) {
             speedAnimationFrame = requestAnimationFrame(animate);
         }
     }
