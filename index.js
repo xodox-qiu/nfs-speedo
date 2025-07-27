@@ -133,7 +133,7 @@ let speedAnimationFrame = null;
 
 const minAngle = 0;       // Start angle of your speedometer arc
 const maxAngle = 234;     // Sweep angle of your speedometer arc
-const maxSpeed = 100;     // Max speed to normalize against (adjust to your design)
+const maxSpeed = 85;     // Max speed to normalize against (adjust to your design)
 const step = 0.2;         // Animation smoothing factor
 
 function setTriangleBySpeed(targetSpeed) {
@@ -330,16 +330,16 @@ document.addEventListener("DOMContentLoaded", () => {
         engineHealth: document.getElementById('engine'),
         };
 
-    // setInterval(() => {
-    // const random = Math.random();
-    // const randoms = Math.random() * 50;
-    // const randomg = Math.floor(Math.random() * 7); // Random gear between 1 and 6
+    setInterval(() => {
+    const random = Math.random();
+    const randoms = Math.random() * 50;
+    const randomg = Math.floor(Math.random() * 7); // Random gear between 1 and 6
 
-    // setSpeed(100);  // Set speed to 50 mph
-    // setGear(randomg);    // Set gear to 3
-    // setFuel(random);     // Set fuel to a random value between 0 and 1
-    // setEngineHealth(0.5); // Set engine health to a random value between 0.6 and 1.0
-    // }, 1000); // Update speed and gear every second
+    setSpeed(60);  // Set speed to 50 mph
+    setGear(randomg);    // Set gear to 3
+    setFuel(random);     // Set fuel to a random value between 0 and 1
+    setEngineHealth(0.5); // Set engine health to a random value between 0.6 and 1.0
+    }, 1000); // Update speed and gear every second
 
 //     let currentSpeed = 0;
 //     let goingUp = true;
