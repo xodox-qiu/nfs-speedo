@@ -139,44 +139,57 @@ const step = 0.15;
 function setTriangleBySpeed(targetSpeed) {
   cancelAnimationFrame(speedAnimationFrame);
 
-  let normalizedSpeed = Math.min(Math.max(targetSpeed / maxSpeed, 0), 1);
-
-  // Internal variable to create bump effect
-  let bumpSpeed = currentSpeed;
+  const normalizedTarget = Math.min(Math.max(targetSpeed / maxSpeed, 0), 1);
 
   function animate() {
-    const diff = normalizedSpeed - bumpSpeed;
+    const diff = normalizedTarget - currentSpeed;
 
-    // When speed increases — jump quickly almost immediately
-    if (diff > 0) {
-      bumpSpeed += diff * 0.5; // fast jump up
+    if (Math.abs(diff) > 0.001) {
+      currentSpeed += diff * step;
+      const angle = minAngle + currentSpeed * (maxAngle - minAngle);
+      const triangle = document.getElementById("speedPointer");
+      if (triangle) {
+        triangle.style.transform = `rotate(${angle}deg)`;
+      }
+      speedAnimationFrame = requestAnimationFrame(animate);
     } else {
-      // When speed decreases — fallback a bit less than target to create bounce
-      bumpSpeed += diff * step * 2; // slower fallback (pull back)
-      // add a tiny rebound effect (oscillation)
-      bumpSpeed += 0.02 * Math.sin(Date.now() / 100);
+      currentSpeed = normalizedTarget;
     }
+  }
 
-    // Clamp bumpSpeed between 0 and 1
-    bumpSpeed = Math.min(Math.max(bumpSpeed, 0), 1);
+  animate();
+}
 
-    // Calculate the angle for rotation
-    const angle = minAngle + bumpSpeed * (maxAngle - minAngle);
+function recoilNeedle(intensity = 0.02, direction = 'up') {
+  const originalSpeed = currentSpeed;
+  let recoilSpeed = direction === 'up' 
+    ? originalSpeed - intensity 
+    : originalSpeed + intensity;
+
+  recoilSpeed = Math.min(Math.max(recoilSpeed, 0), 1);
+
+  let frame = 0;
+  const maxFrames = 15;
+
+  function animateRecoil() {
+    const t = frame / maxFrames;
+    const easeOut = 1 - Math.pow(1 - t, 3); // easing for smoother return
+
+    const interpolatedSpeed = recoilSpeed + (originalSpeed - recoilSpeed) * easeOut;
+    const angle = minAngle + interpolatedSpeed * (maxAngle - minAngle);
 
     const triangle = document.getElementById("speedPointer");
     if (triangle) {
       triangle.style.transform = `rotate(${angle}deg)`;
     }
 
-    // Continue animating while difference is significant
-    if (Math.abs(diff) > 0.001) {
-      speedAnimationFrame = requestAnimationFrame(animate);
-    } else {
-      currentSpeed = bumpSpeed; // Update the currentSpeed state when stable
+    if (frame < maxFrames) {
+      frame++;
+      requestAnimationFrame(animateRecoil);
     }
   }
 
-  animate();
+  animateRecoil();
 }
 
 function createCircularNumbers() {
@@ -212,21 +225,23 @@ function setGear(gearValue) {
     elements.gearValue.innerText = String(gearValue);
 
     const arrowElement = document.getElementById("gearArrow");
-    
+
     if (previousGear !== null) {
         if (gearValue > previousGear) {
             arrowElement.innerText = "▲";
             arrowElement.style.opacity = 1;
             arrowElement.style.color = '#00ff00'; // Green for upshift
+            recoilNeedle(0.05, 'up'); // Gear up recoil
         } else if (gearValue < previousGear) {
             arrowElement.innerText = "▼";
             arrowElement.style.opacity = 1;
             arrowElement.style.color = '#ff0000'; // Red for downshift
+            recoilNeedle(0.05, 'down'); // Gear down recoil (a bit stronger)
         } else {
             arrowElement.style.opacity = 0;
         }
 
-        // Hide arrow after 500ms
+        // Hide arrow after 700ms
         setTimeout(() => {
             arrowElement.style.opacity = 0;
         }, 700);
@@ -234,6 +249,7 @@ function setGear(gearValue) {
 
     previousGear = gearValue;
 }
+
 
 function setSmallSpeedoRedline(startPercent, endPercent) {
     const centerX = 100;
@@ -347,7 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // const randoms = Math.random() * 50;
     // const randomg = Math.floor(Math.random() * 7); // Random gear between 1 and 6
 
-    // setSpeed(50);  // Set speed to 50 mph
+    // setSpeed(randoms);  // Set speed to 50 mph
     // setGear(randomg);    // Set gear to 3
     // setFuel(random);     // Set fuel to a random value between 0 and 1
     // setEngineHealth(0.5); // Set engine health to a random value between 0.6 and 1.0
