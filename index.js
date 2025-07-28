@@ -358,16 +358,16 @@ document.addEventListener("DOMContentLoaded", () => {
         engineHealth: document.getElementById('engine'),
         };
 
-    setInterval(() => {
-    const random = Math.random();
-    const randoms = Math.random() * 50;
-    const randomg = Math.floor(Math.random() * 7); // Random gear between 1 and 6
+    // setInterval(() => {
+    // const random = Math.random();
+    // const randoms = Math.random() * 50;
+    // const randomg = Math.floor(Math.random() * 7); // Random gear between 1 and 6
 
-    setSpeed(randoms);  // Set speed to 50 mph
-    setGear(randomg);    // Set gear to 3
-    setFuel(1);     // Set fuel to a random value between 0 and 1
-    setEngineHealth(0.5); // Set engine health to a random value between 0.6 and 1.0
-    }, 1000); // Update speed and gear every second
+    // setSpeed(randoms);  // Set speed to 50 mph
+    // setGear(randomg);    // Set gear to 3
+    // setFuel(1);     // Set fuel to a random value between 0 and 1
+    // setEngineHealth(0.5); // Set engine health to a random value between 0.6 and 1.0
+    // }, 1000); // Update speed and gear every second
 
 //     let currentSpeed = 0;
 //     let goingUp = true;
