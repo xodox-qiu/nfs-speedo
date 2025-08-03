@@ -128,70 +128,6 @@ function setSmallArc(percent) {
 }
 setSmallArc(0.5);
 
-let currentSpeed = 0;
-let speedAnimationFrame = null;
-
-const minAngle = 0;
-const maxAngle = 234;
-const maxSpeed = 80;
-const step = 0.15;
-
-function setTriangleBySpeed(targetSpeed) {
-  cancelAnimationFrame(speedAnimationFrame);
-
-  const normalizedTarget = Math.min(Math.max(targetSpeed / maxSpeed, 0), 1);
-
-  function animate() {
-    const diff = normalizedTarget - currentSpeed;
-
-    if (Math.abs(diff) > 0.001) {
-      currentSpeed += diff * step;
-      const angle = minAngle + currentSpeed * (maxAngle - minAngle);
-      const triangle = document.getElementById("speedPointer");
-      if (triangle) {
-        triangle.style.transform = `rotate(${angle}deg)`;
-      }
-      speedAnimationFrame = requestAnimationFrame(animate);
-    } else {
-      currentSpeed = normalizedTarget;
-    }
-  }
-
-  animate();
-}
-
-function recoilNeedle(intensity = 0.02, direction = 'up') {
-  const originalSpeed = currentSpeed;
-  let recoilSpeed = direction === 'up' 
-    ? originalSpeed - intensity 
-    : originalSpeed + intensity;
-
-  recoilSpeed = Math.min(Math.max(recoilSpeed, 0), 1);
-
-  let frame = 0;
-  const maxFrames = 15;
-
-  function animateRecoil() {
-    const t = frame / maxFrames;
-    const easeOut = 1 - Math.pow(1 - t, 3); // easing for smoother return
-
-    const interpolatedSpeed = recoilSpeed + (originalSpeed - recoilSpeed) * easeOut;
-    const angle = minAngle + interpolatedSpeed * (maxAngle - minAngle);
-
-    const triangle = document.getElementById("speedPointer");
-    if (triangle) {
-      triangle.style.transform = `rotate(${angle}deg)`;
-    }
-
-    if (frame < maxFrames) {
-      frame++;
-      requestAnimationFrame(animateRecoil);
-    }
-  }
-
-  animateRecoil();
-}
-
 function createCircularNumbers() {
     const container = document.querySelector('.circular-number');
     const count = 10;
@@ -216,9 +152,29 @@ function createCircularNumbers() {
 }
 createCircularNumbers();
 
+function setTriangleBySpeed(speedValue) {
+    const maxSpeed = 70;         // m/s (≈ 250 km/h or 156 mph)
+    const maxRPM = 17800;         // Max RPM value for display
+    const speedRatio = Math.min(speedValue / maxSpeed, 1); // Clamp between 0–1
+    const rpm = speedRatio * maxRPM;
+
+    rotateNeedleByRPM(rpm);
+}
+
+function rotateNeedleByRPM(rpm) {
+    const minAngle = 0; // Starting angle
+    const maxAngle = 119;  // Ending angle
+    const rpmRatio = rpm / 9000; // Normalize
+
+    const angle = minAngle + (maxAngle - minAngle) * rpmRatio;
+    elements.pointer.style.transform = `rotate(${angle}deg)`;
+}
+
 function setSpeed(speedValue) {
-    elements.speedValue.innerText = `${Math.round(speedValue * 2.236936)}`;
-    setTriangleBySpeed(speedValue);
+    const mph = Math.round(speedValue * 2.236936);
+    elements.speedValue.innerText = `${mph}`;
+
+    setTriangleBySpeed(speedValue); // <-- Connect to triangle needle here
 }
 
 function setGear(gearValue) {
@@ -231,12 +187,10 @@ function setGear(gearValue) {
             arrowElement.innerText = "▲";
             arrowElement.style.opacity = 1;
             arrowElement.style.color = '#00ff00'; // Green for upshift
-            recoilNeedle(0.05, 'up'); // Gear up recoil
         } else if (gearValue < previousGear) {
             arrowElement.innerText = "▼";
             arrowElement.style.opacity = 1;
             arrowElement.style.color = '#ff0000'; // Red for downshift
-            recoilNeedle(0.05, 'down'); // Gear down recoil (a bit stronger)
         } else {
             arrowElement.style.opacity = 0;
         }
@@ -249,7 +203,6 @@ function setGear(gearValue) {
 
     previousGear = gearValue;
 }
-
 
 function setSmallSpeedoRedline(startPercent, endPercent) {
     const centerX = 100;
