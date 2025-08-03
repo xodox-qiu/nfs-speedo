@@ -153,22 +153,20 @@ function createCircularNumbers() {
 createCircularNumbers();
 
 function setTriangleBySpeed(speedValue) {
-    const maxSpeed = 70;         // m/s (≈ 250 km/h or 156 mph)
-    const maxRPM = 17800;         // Max RPM value for display
-    const speedRatio = Math.min(speedValue / maxSpeed, 1); // Clamp between 0–1
-    const rpm = speedRatio * maxRPM;
-
+    const rpm = speedValue * 128.571; // conversion ratio (example)
     rotateNeedleByRPM(rpm);
 }
 
 function rotateNeedleByRPM(rpm) {
-    const minAngle = 0; // Starting angle
-    const maxAngle = 119;  // Ending angle
-    const rpmRatio = rpm / 9000; // Normalize
+    const minAngle = 0;
+    const maxAngle = 100;
+    const baseMaxRPM = 5500;
+    const rpmRatio = rpm / baseMaxRPM;
 
     const angle = minAngle + (maxAngle - minAngle) * rpmRatio;
     elements.pointer.style.transform = `rotate(${angle}deg)`;
 }
+
 
 function setSpeed(speedValue) {
     const mph = Math.round(speedValue * 2.236936);
@@ -316,7 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // const randoms = Math.random() * 50;
     // const randomg = Math.floor(Math.random() * 7); // Random gear between 1 and 6
 
-    // setSpeed(randoms);  // Set speed to 50 mph
+    // setSpeed(100);  // Set speed to 50 mph
     // setGear(randomg);    // Set gear to 3
     // setFuel(1);     // Set fuel to a random value between 0 and 1
     // setEngineHealth(0.5); // Set engine health to a random value between 0.6 and 1.0
